@@ -11,10 +11,19 @@ import numpy as np
 import logging
 import PIL.Image as Image
 import io
+from .yolov5.detect import detect
+
+# from .yolov5.detect
+
+
+# from .model import *
+
 logger = logging.getLogger()
 
 
 class WebSocketHandler(WebSocket):
+
+
 
     @staticmethod
     def sendBroadcast(msg):
@@ -50,8 +59,13 @@ class WebSocketHandler(WebSocket):
         img = cv2.imdecode(imageNp,cv2.IMREAD_COLOR) 
         # print("frame",img.shape)
         
-        cv2.imshow("Frame",cv2.flip(img, 1) )   #show captured frame
-        cv2.waitKey(1)    
+        # print(predict(img))
+        detectObj=detect()
+
+
+        detectObj.run(im0=img)
+        # cv2.imshow("Frame",cv2.flip(img, 1) )   #show captured frame
+        # cv2.waitKey(1)    
         
         
   
@@ -65,6 +79,7 @@ class WebSocketHandler(WebSocket):
 
     def handleConnected(self):
         logger.info('New client connected %s' % self.address[0])
+        print("New client connected")
 
     def handleClose(self):
         logger.info('Client disconnected %s' % self.data)
