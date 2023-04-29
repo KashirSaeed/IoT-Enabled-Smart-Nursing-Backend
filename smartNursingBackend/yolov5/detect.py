@@ -38,6 +38,7 @@ import numpy as np
 import torch
 import cv2
 
+
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
 if str(ROOT) not in sys.path:
@@ -54,6 +55,9 @@ from utils.torch_utils import select_device, smart_inference_mode
 from utils.augmentations import (Albumentations, augment_hsv, classify_albumentations, classify_transforms, copy_paste,
                                  letterbox, mixup, random_perspective)
 
+import postData
+counter = 0
+oldActivities = "kashir"
 
 @smart_inference_mode()
 
@@ -240,6 +244,15 @@ class detect:
 
         # Print time (inference-only)
         LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
+        
+        def activitiesSender():
+            global counter
+            global oldActivities
+            postData.activityDetector(s,oldActivities)
+            counter = counter + 1
+            oldActivities = s
+            
+        activitiesSender()
 
         # Print results
         # t = tuple(x.t / seen * 1E3 for x in dt)  # speeds per image
