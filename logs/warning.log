@@ -253,3 +253,128 @@ Homepage was accessed at 2023-04-27 15:11:34.357861 hours!
 Not Found: /favicon.ico
 Homepage was accessed at 2023-04-28 11:03:24.860590 hours!
 Not Found: /favicon.ico
+Homepage was accessed at 2023-04-29 01:45:36.912227 hours!
+Not Found: /favicon.ico
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: fetch_from_influx() takes 0 positional arguments but 1 was given
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 75, in fetch_from_influx
+    return JsonResponse({tables})
+TypeError: unhashable type: 'TableList'
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 75, in fetch_from_influx
+    json_data = result.to_json(orient='records')
+AttributeError: 'list' object has no attribute 'to_json'
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 75, in fetch_from_influx
+    json_data = result.to_json(orient='records')
+AttributeError: 'list' object has no attribute 'to_json'
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 75, in fetch_from_influx
+    json_data = result.to_json(orient='records')
+AttributeError: 'list' object has no attribute 'to_json'
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 76, in fetch_from_influx
+    json_data = result.to_json(orient='records')
+AttributeError: 'list' object has no attribute 'to_json'
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 75, in fetch_from_influx
+    result = client.query_api().query_data_frame(query)
+  File "C:\Python310\lib\site-packages\influxdb_client\client\query_api.py", line 253, in query_data_frame
+    _generator = self.query_data_frame_stream(query, org=org, data_frame_index=data_frame_index, params=params)
+  File "C:\Python310\lib\site-packages\influxdb_client\client\query_api.py", line 286, in query_data_frame_stream
+    response = self._query_api.post_query(org=org, query=self._create_query(query, self.default_dialect, params,
+  File "C:\Python310\lib\site-packages\influxdb_client\service\query_service.py", line 279, in post_query
+    (data) = self.post_query_with_http_info(**kwargs)  # noqa: E501
+  File "C:\Python310\lib\site-packages\influxdb_client\service\query_service.py", line 305, in post_query_with_http_info
+    return self.api_client.call_api(
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\api_client.py", line 343, in call_api
+    return self.__call_api(resource_path, method,
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\api_client.py", line 173, in __call_api
+    response_data = self.request(
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\api_client.py", line 388, in request
+    return self.rest_client.POST(url,
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\rest.py", line 311, in POST
+    return self.request("POST", url,
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\rest.py", line 261, in request
+    raise ApiException(http_resp=r)
+influxdb_client.rest.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'Date': 'Fri, 28 Apr 2023 21:12:24 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'trace-id': '9ee1c471d6591e60', 'trace-sampled': 'false', 'vary': 'Accept-Encoding', 'x-platform-error-code': 'invalid', 'Strict-Transport-Security': 'max-age=15724800; includeSubDomains', 'X-Influxdb-Request-ID': 'a1208133e4fec7ebea8d71f8ad533fec', 'X-Influxdb-Build': 'Cloud'})
+HTTP response body: b'{"code":"invalid","message":"compilation failed: error @1:45-1:46: invalid statement: |\\n\\nerror @1:46-1:48: invalid statement: |\\u003e"}'
+
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 77, in fetch_from_influx
+    json_data = ''.join([df.to_json(orient='records') for df in result])
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 77, in <listcomp>
+    json_data = ''.join([df.to_json(orient='records') for df in result])
+AttributeError: 'str' object has no attribute 'to_json'
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 84, in fetch_from_influx
+    return JsonResponse(json_data)
+  File "C:\Python310\lib\site-packages\django\http\response.py", line 741, in __init__
+    raise TypeError(
+TypeError: In order to allow non-dict objects to be serialized set the safe parameter to False.
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\utils\deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+  File "C:\Python310\lib\site-packages\django\middleware\common.py", line 107, in process_response
+    if response.status_code == 404 and self.should_redirect_with_slash(request):
+AttributeError: 'str' object has no attribute 'status_code'
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\utils\deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+  File "C:\Python310\lib\site-packages\django\middleware\common.py", line 107, in process_response
+    if response.status_code == 404 and self.should_redirect_with_slash(request):
+AttributeError: 'str' object has no attribute 'status_code'

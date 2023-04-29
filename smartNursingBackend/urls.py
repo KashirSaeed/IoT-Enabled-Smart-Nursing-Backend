@@ -20,5 +20,6 @@ from API_Handler import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.hello_reader, name="hello_reader")
+    path('',views.hello_reader, name="hello_reader"),
+    path('fetch/', views.fetch_from_influx, name='fetch_from_influx'),
 ]
