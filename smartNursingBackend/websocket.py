@@ -19,6 +19,7 @@ from .yolov5.detect import detect
 # from .model import *
 
 logger = logging.getLogger()
+detectObj=detect()
 
 
 class WebSocketHandler(WebSocket):
@@ -45,7 +46,7 @@ class WebSocketHandler(WebSocket):
 
     def handleMessage(self):
         
-        # print("received message")
+
         image_64_decoded = base64.b64decode(self.data) 
         
         
@@ -60,7 +61,6 @@ class WebSocketHandler(WebSocket):
         # print("frame",img.shape)
         
         # print(predict(img))
-        detectObj=detect()
 
 
         detectObj.run(im0=img)
