@@ -1,13 +1,18 @@
 from django.shortcuts import render
 
 # Create your views here.
-
 from django.http import HttpResponse
 import datetime
 # import the logging library
 import logging
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
+# creating .log file per day
+from logging.handlers import TimedRotatingFileHandler
+logname = "logs/logsContainer.log"
+handler = TimedRotatingFileHandler(logname, when="midnight", backupCount=30)
+handler.suffix = "%Y%m%d"
+logger.addHandler(handler)
 
 def hello_reader(request):
     logger.warning('Homepage was accessed at '+str(datetime.datetime.now())+' hours!')
@@ -21,7 +26,6 @@ import json
 
 def fetch_from_influx(request):
     # pass request as arg
-
     # Extract data from request
     # measurement = request.GET.get('measurement')
     # tag_key = request.GET.get('tag_key')

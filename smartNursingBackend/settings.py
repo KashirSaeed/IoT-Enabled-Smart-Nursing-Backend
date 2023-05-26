@@ -139,28 +139,62 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-import os 
+# import os 
+# LOGGING = {
+#     'version': 1,
+#     # The version number of our log
+#     'disable_existing_loggers': False,
+#     # django uses some of its own loggers for internal operations. In case you want to disable them just replace the False above with true.
+#     # A handler for WARNING. It is basically writing the WARNING messages into a file called WARNING.log
+#     'handlers': {
+#         'file': {
+#             'level': 'WARNING',
+#             'class': 'logging.FileHandler',
+#             'filename': BASE_DIR / 'logs/warning.log',
+#         },
+#     },
+#     # A logger for WARNING which has a handler called 'file'. A logger can have multiple handler
+#     'loggers': {
+#        # notice the blank '', Usually you would put built in loggers like django or root here based on your needs
+#         '': {
+#             'handlers': ['file'], #notice how file variable is called in handler which has been defined above
+#             'level': 'WARNING',
+#             'propagate': True,
+#         },
+#     },
+# }
 
-LOGGING = {
+from logging.config import dictConfig
+import logging
+
+dictConfig({
     'version': 1,
-    # The version number of our log
-    'disable_existing_loggers': False,
-    # django uses some of its own loggers for internal operations. In case you want to disable them just replace the False above with true.
-    # A handler for WARNING. It is basically writing the WARNING messages into a file called WARNING.log
+    'formatters': {
+        'standard': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s'
+        }
+    },
     'handlers': {
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs/warning.log',
+        'myapp_handler': {
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': 'logs/logsContainer.log',
+            'when': 'd',
+            'interval': 1,
+            'backupCount': 30,
+            'level': 'DEBUG',
+            "encoding": "utf8",
+            'formatter': 'standard'
         },
     },
-    # A logger for WARNING which has a handler called 'file'. A logger can have multiple handler
     'loggers': {
-       # notice the blank '', Usually you would put built in loggers like django or root here based on your needs
-        '': {
-            'handlers': ['file'], #notice how file variable is called in handler which has been defined above
-            'level': 'WARNING',
-            'propagate': True,
-        },
+        'simple': {
+            'level': 'DEBUG',
+            'handlers': ['myapp_handler']
+        }
     },
-}
+})
+
+
+logger = logging.getLogger("simple")
+
+logger.error("This is a test error")
