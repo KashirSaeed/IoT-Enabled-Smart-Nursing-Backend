@@ -1,1 +1,1 @@
-web: gunicorn iot-enabled.wsgi
+web: gunicorn smartNursingBackend.wsgi 

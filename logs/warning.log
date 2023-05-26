@@ -427,3 +427,46 @@ Traceback (most recent call last):
 django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '192.168.1.9:8000'. You may need to add '192.168.1.9' to ALLOWED_HOSTS.
 Bad Request: /favicon.ico
 Homepage was accessed at 2023-04-30 18:22:17.206115 hours!
+Homepage was accessed at 2023-05-03 02:27:25.650557 hours!
+Not Found: /favicon.ico
+Internal Server Error: /fetch/
+Traceback (most recent call last):
+  File "C:\Python310\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python310\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\MyData\FYP\IoT-Enabled-Smart-Nursing-Backend\API_Handler\views.py", line 77, in fetch_from_influx
+    result = client.query_api().query(query)
+  File "C:\Python310\lib\site-packages\influxdb_client\client\query_api.py", line 203, in query
+    response = self._query_api.post_query(org=org, query=self._create_query(query, self.default_dialect, params),
+  File "C:\Python310\lib\site-packages\influxdb_client\service\query_service.py", line 279, in post_query
+    (data) = self.post_query_with_http_info(**kwargs)  # noqa: E501
+  File "C:\Python310\lib\site-packages\influxdb_client\service\query_service.py", line 305, in post_query_with_http_info
+    return self.api_client.call_api(
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\api_client.py", line 343, in call_api
+    return self.__call_api(resource_path, method,
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\api_client.py", line 173, in __call_api
+    response_data = self.request(
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\api_client.py", line 388, in request
+    return self.rest_client.POST(url,
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\rest.py", line 311, in POST
+    return self.request("POST", url,
+  File "C:\Python310\lib\site-packages\influxdb_client\_sync\rest.py", line 186, in request
+    r = self.pool_manager.request(
+  File "C:\Python310\lib\site-packages\urllib3\request.py", line 78, in request
+    return self.request_encode_body(
+  File "C:\Python310\lib\site-packages\urllib3\request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "C:\Python310\lib\site-packages\urllib3\poolmanager.py", line 376, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "C:\Python310\lib\site-packages\urllib3\connectionpool.py", line 785, in urlopen
+    retries = retries.increment(
+  File "C:\Python310\lib\site-packages\urllib3\util\retry.py", line 525, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "C:\Python310\lib\site-packages\urllib3\packages\six.py", line 770, in reraise
+    raise value
+  File "C:\Python310\lib\site-packages\urllib3\connectionpool.py", line 703, in urlopen
+    httplib_response = self._make_request(
+  File "C:\Python310\lib\site-packages\urllib3\connectionpool.py", line 428, in _make_request
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='us-east-1-1.aws.cloud2.influxdata.com', port=443): Read timed out. (read timeout=0)

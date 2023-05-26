@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-rxq*7n%*e4qx&%ait=_cf(7bws&rfe^lte&rily6gsmo-8(c6y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','127.0.0.1','.vercel.app']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'API_Handler',
     'corsheaders',
+    'API_HANDLER'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'smartNursingBackend.wsgi.application'
+WSGI_APPLICATION = 'smartNursingBackend.wsgi.app'
 
 
 # Database
