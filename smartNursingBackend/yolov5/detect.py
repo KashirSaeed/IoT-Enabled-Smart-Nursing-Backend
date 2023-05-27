@@ -222,11 +222,8 @@ class detect:
         # Print time (inference-only)
         LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
         
-        
-       
-        postThread=threading.Thread(target=postData.postData,args=(s,),daemon=True)
-
-        postThread.start()
+        # postThread=threading.Thread(target=postData.postData,args=(s,),daemon=True)
+        # postThread.start()
         
 
 

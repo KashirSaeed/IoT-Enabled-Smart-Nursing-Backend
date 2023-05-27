@@ -1,5 +1,6 @@
 import os
 from ssl import PROTOCOL_TLSv1_2
+import threading
 from django.dispatch import receiver
 from smartNursingBackend.signals import update_signal
 from smartNursingBackend.settings import BASE_DIR, DEFAULT_WS_PORT
@@ -11,6 +12,8 @@ import numpy as np
 import logging
 import PIL.Image as Image
 import io
+
+from smartNursingBackend.yolov5.postData import postData
 from .yolov5.detect import detect
 
 # from .yolov5.detect
@@ -45,25 +48,26 @@ class WebSocketHandler(WebSocket):
     # WebSocket handling methods
 
     def handleMessage(self):
-        
-
-        image_64_decoded = base64.b64decode(self.data) 
-        
-        
-        imageNp = np.frombuffer(image_64_decoded, dtype = np.uint8)
-        # print("adsf",type(image_64_decoded))
+        # image_64_decoded = base64.b64decode(self.data) 
+        # imageNp = np.frombuffer(image_64_decoded, dtype = np.uint8)
+        # # print("adsf",type(image_64_decoded))
         # print("img data type",type(imageNp), "shape",imageNp.shape)
         # img.show()
         # nparr = np.fromstring(self.data, np.uint8)
         # newFrame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         # cv2.imshow("s", newFrame)
-        img = cv2.imdecode(imageNp,cv2.IMREAD_COLOR) 
-        # print("frame",img.shape)
+        # img = cv2.imdecode(imageNp,cv2.IMREAD_COLOR) 
+        # # print("frame",img.shape)
         
         # print(predict(img))
 
+        print(self.data)
+        # postThread=threading.Thread(target=postData.postData,args=(self.data,),daemon=True)
+        # postThread.start()
+        # postThread.quit()
 
-        detectObj.run(im0=img)
+    
+        # detectObj.run(im0=img)
         # cv2.imshow("Frame",cv2.flip(img, 1) )   #show captured frame
         # cv2.waitKey(1)    
         
