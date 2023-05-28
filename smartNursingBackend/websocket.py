@@ -21,7 +21,6 @@ from smartNursingBackend.postData import postData
 # from .model import *
 
 logger = logging.getLogger()
-detectObj=detect()
 
 
 class WebSocketHandler(WebSocket):
