@@ -19,9 +19,9 @@ from django.urls import include, path
 from API_Handler import views
 
 urlpatterns = [
-    path('', include('API_HANDLER.urls')),
+    # path('', include('API_Handler.urls')),
     path('admin/', admin.site.urls),
-    # path('',views.hello_reader, name="hello_reader"),
-    
+    path('',views.hello_reader, name="hello_reader"),
+    # path('sse/', views.sse_endpoint, name='sse'),
     path('fetch/', views.fetch_from_influx, name='fetch_from_influx'),
 ]
