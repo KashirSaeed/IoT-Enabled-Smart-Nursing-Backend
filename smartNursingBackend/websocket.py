@@ -13,8 +13,7 @@ import logging
 import PIL.Image as Image
 import io
 
-from smartNursingBackend.yolov5.postData import postData
-from .yolov5.detect import detect
+from smartNursingBackend.postData import postData
 
 # from .yolov5.detect
 
@@ -62,8 +61,8 @@ class WebSocketHandler(WebSocket):
         # print(predict(img))
 
         print(self.data)
-        # postThread=threading.Thread(target=postData.postData,args=(self.data,),daemon=True)
-        # postThread.start()
+        postThread=threading.Thread(target=postData,args=(self.data,),daemon=True)
+        postThread.start()
         # postThread.quit()
 
     
