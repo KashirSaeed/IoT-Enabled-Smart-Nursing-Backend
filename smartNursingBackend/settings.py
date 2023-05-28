@@ -59,10 +59,10 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'https://iot-enabled-smart-nursing.netlify.app/',
+    'https://iot-enabled-smart-nursing.netlify.app',
 ] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    'https://iot-enabled-smart-nursing.netlify.app/',
+    'https://iot-enabled-smart-nursing.netlify.app',
 ]
 
 ROOT_URLCONF = 'smartNursingBackend.urls'
@@ -201,5 +201,5 @@ logger.error("This is a test error")
 
 import os
 STATIC_URL = 'static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
