@@ -1,1 +1,0 @@
-web: gunicorn smartNursingBackend.wsgi 

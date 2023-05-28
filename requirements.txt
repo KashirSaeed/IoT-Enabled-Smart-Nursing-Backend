@@ -1,6 +1,7 @@
 Django==4.2
 SimpleWebSocketServer==0.1.2
 sqlparse==0.4.2
+influxdb_clieent==1.36.1
 
 
 # YOLOv5 requirements
@@ -53,4 +54,3 @@ setuptools>=65.5.1 # Snyk vulnerability fix
 # albumentations>=1.0.3
 # pycocotools>=2.0.6  # COCO mAP
 # ultralytics  # HUB https://hub.ultralytics.com
-gunicorn>=20.1.0
