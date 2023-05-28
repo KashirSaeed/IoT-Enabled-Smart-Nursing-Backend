@@ -28,11 +28,7 @@ SECRET_KEY = 'django-insecure-rxq*7n%*e4qx&%ait=_cf(7bws&rfe^lte&rily6gsmo-8(c6y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< Updated upstream
-ALLOWED_HOSTS = ['*','.vercel.app','.now.sh']
-=======
 ALLOWED_HOSTS = ['*']
->>>>>>> Stashed changes
 
 
 # Application definition
@@ -63,10 +59,10 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'https://iot-enabled-smart-nursing.netlify.app/',
+    'http://localhost:3000',
 ] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    'https://iot-enabled-smart-nursing.netlify.app/',
+    'http://localhost:3000',
 ]
 
 ROOT_URLCONF = 'smartNursingBackend.urls'
@@ -135,7 +131,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -203,7 +199,3 @@ logger = logging.getLogger("simple")
 
 logger.error("This is a test error")
 
-import os
-STATIC_URL = 'static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR,'static')
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
