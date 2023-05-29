@@ -9,7 +9,8 @@ write_api = client.write_api(write_options=SYNCHRONOUS)
 
 def postData(objects):
     global write_api
-    print("DATA REACHED" , objects)
-    data = Point("objectDetection").tag("location", "hospital").field("object name",objects).field("Blood pressure", 100.5).time(datetime.datetime.utcnow().isoformat() + 'Z').time(datetime.datetime.utcnow().isoformat() + 'Z')
-    write_api.write(bucket="Object Detection", record=data)
+    print("DATA REACHED" , objects['activity'])
+    for obj in objects['activity']:
+        data = Point("objectDetection").tag("location", "hospital").field("object name",obj).field("Blood pressure", 100.5).time(datetime.datetime.utcnow().isoformat() + 'Z').time(datetime.datetime.utcnow().isoformat() + 'Z')
+        write_api.write(bucket="Object Detection", record=data)
     return
