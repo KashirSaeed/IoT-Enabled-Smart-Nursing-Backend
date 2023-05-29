@@ -4,6 +4,7 @@ sqlparse==0.4.2
 influxdb_client==1.36.1
 pusher==3.3.2
 pysher==1.0.8
+paho-mqtt==1.6.1
 
 
 # YOLOv5 requirements
