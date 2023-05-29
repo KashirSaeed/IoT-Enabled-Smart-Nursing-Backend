@@ -17,9 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from API_Handler import views
+# from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.hello_reader, name="hello_reader"),
     path('fetch/', views.fetch_from_influx, name='fetch_from_influx'),
+    path('userData/',views.postUserData,name='userData'),
+    path('user/<str:email>/<str:password>/',views.getSpecificUser,name='getSpecificUser')
+    # path('user/<str:usertype>/',views.addingUsertype,name='getSpecificUser')
+
+
 ]

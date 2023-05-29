@@ -1,5 +1,12 @@
 from django.shortcuts import render
-
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import SYNCHRONOUS
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
+import influxdb_client
+from influxdb_client.client.write_api import SYNCHRONOUS
 # Create your views here.
 from django.http import HttpResponse
 import datetime
@@ -14,15 +21,128 @@ handler = TimedRotatingFileHandler(logname, when="midnight", backupCount=30)
 handler.suffix = "%Y%m%d"
 logger.addHandler(handler)
 
+# ---------Credentials of influxdb-------------
+bucket = "Users"
+org = "1936be69c64da4d7"
+token = "R4yVXBDI84LlpaZijvjNMrhl-8m-67S_gUNhON9CXISLLSEwKP4Oaeykw8UaF-wq5rQs4_kismihsVNBCC3vVQ=="
+url = "https://us-east-1-1.aws.cloud2.influxdata.com"
+measurement = "User"
+
+# ------------Sample Page--------------
 def hello_reader(request):
     logger.warning('Homepage was accessed at '+str(datetime.datetime.now())+' hours!')
     return HttpResponse("<h1>Created Django Application </h1>")
+# --------------Posting the data in influxdb-----------
+@csrf_exempt
+def postUserData(request):
+    # ----------Using global variable---------
+    global bucket
+    global org
+    global token
+    global url
+    global measurement
+    # -----------Parameters send from frontend----------
+    data = json.loads(request.body)
+    myUsername = data.get('myUsername')
+    myEmail = data.get('myEmail')
+    myPassword = data.get('myPassword')
+
+    # -------------Create an InfluxDB client------------
+    client = InfluxDBClient(url=url, token=token, org=org)
+    # ----------Query for checking whether user with same email exist--------
+    query_api = client.query_api()
+    query = f'from(bucket:"{bucket}") \
+    |> range(start: -1y) \
+    |> filter(fn:(r) => r._measurement == "{measurement}" and r.email == "{myEmail}" )'
+    # ----------append data in array-----------
+    result = query_api.query(org=org, query=query)
+    results = []
+    for table in result:
+        for record in table.records:
+            results.append((record.get_field(), record.get_value()))
+    # --------checking wether user with same email exist or not---------- 
+    if(len(results) == 0 ):
+        # ----------code for posting data----------
+        # Define the data to be written
+        data = Point(measurement).field("username", myUsername).tag("email",myEmail).field("password", myPassword).time(datetime.datetime.utcnow().isoformat() + 'Z')
+        # Create a write API instance
+        write_api = client.write_api(write_options=SYNCHRONOUS)
+        # Write the data to the bucket
+        write_api.write(bucket=bucket, record=data)
+        # Close the write API
+        write_api.close()
+        print("--------------user registered successfully------------")
+        response = json.dumps(data, default=str)
+        return JsonResponse(response,safe=False)
+    else:
+        print("--------------Already Exist User------------")
+        return JsonResponse({"response":"Already Exist User"},safe=False)
+
+def getSpecificUser(request, *args, **kwargs):
+    # --------using glpbal variables--------
+    global bucket
+    global org
+    global token
+    global url
+    global measurement
+    # -----------Parameters send from frontend----------
+    myEmail = kwargs['email']
+    myPassword = kwargs['password']
+    # ---------making connection to influxdb-----------
+    client = influxdb_client.InfluxDBClient(
+        url=url,
+        token=token,
+        org=org
+    )
+
+    # -----------query for reading data--------
+    query_api = client.query_api()    
+    query = f'from(bucket:"{bucket}") \
+    |> range(start: -1y) \
+    |> filter(fn:(r) => r._measurement == "{measurement}" and r.email == "{myEmail}"   and r._field == "password"  and r._value == "{myPassword}" )'
+
+    result = query_api.query(org=org, query=query)
+    results = []
+    for table in result:
+        for record in table.records:
+            results.append((record.get_field(), record.get_value()))
+
+    print(results)
+    if(len(results) == 0 ):
+        return JsonResponse({"response":"false"},safe=False)
+    else:
+        return JsonResponse({"response":"true"},safe=False)
 
 
-from influxdb_client import InfluxDBClient, Point
-from influxdb_client.client.write_api import SYNCHRONOUS
-from django.http import JsonResponse
-import json
+    
+
+# @csrf_exempt
+# def addingUsertype(request , *args, **kwargs)  :
+#     print("I am in--------")
+#     usertype = kwargs['usertype']
+    
+#     client = InfluxDBClient(url="https://us-east-1-1.aws.cloud2.influxdata.com", token="R4yVXBDI84LlpaZijvjNMrhl-8m-67S_gUNhON9CXISLLSEwKP4Oaeykw8UaF-wq5rQs4_kismihsVNBCC3vVQ==", org="1936be69c64da4d7")
+
+#     # Write API instance
+#     write_api = client.write_api(write_options=SYNCHRONOUS)
+
+#     # Prepare the data update
+#     measurement = 'User'
+#     # tags = {'email': 'umairahmedpaki7@gmail.com' }
+#     # fields = {'usertype': usertype}
+#     # timestamp = '2023-05-28T09:49:20.980Z'
+
+#     # Construct the data point with the new field
+#     point  =Point(measurement).tag("email", 'umairahmedpaki7@gmail.com').field('usertype', usertype).time('2023-05-28T10:19:49.889Z')
+
+#     # Write the data point to InfluxDB
+#     write_api.write(bucket='Users', record=point)
+
+#     # Close the InfluxDB client
+#     client.close()
+   
+
+#     return JsonResponse({},safe=False)
 
 def fetch_from_influx(request):
     # pass request as arg

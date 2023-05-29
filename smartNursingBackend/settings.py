@@ -198,3 +198,5 @@ dictConfig({
 logger = logging.getLogger("simple")
 
 logger.error("This is a test error")
+
+CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','http://localhost:3000']
