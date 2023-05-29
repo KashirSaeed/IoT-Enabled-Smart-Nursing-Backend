@@ -53,7 +53,7 @@ def count_influx(request):
 
 def fetch_from_influx(request):
 
-    query = f'from(bucket:"{bucket}")|> range(start: -1y)|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> limit(n: 10)'
+    query = f'from(bucket:"{bucket}")|> range(start: -30d)|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|>limit(n: 10)'
 
     result = client.query_api().query(query)
 

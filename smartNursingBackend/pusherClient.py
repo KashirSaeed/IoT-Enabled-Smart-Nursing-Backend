@@ -29,12 +29,12 @@ def connectHandler(data):
 def pusherCallback(message):
     global counter
     data = json.loads(message)
-    counter+=1
-    print("*****************************************")  
-    print("Thread Counts",threading.active_count())
-    print('Receiving Data from pusher' + str(counter),data)
-    # print("Check Counter",counter)
-    print("*****************************************")
+    # counter+=1
+    # print("*****************************************")  
+    # print("Thread Counts",threading.active_count())
+    # print('Receiving Data from pusher' + str(counter),data)
+    # # print("Check Counter",counter)
+    # print("*****************************************")
     
     # return
     try:
