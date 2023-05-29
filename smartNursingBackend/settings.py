@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-rxq*7n%*e4qx&%ait=_cf(7bws&rfe^lte&rily6gsmo-8(c6y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*','127.0.0.1','.vercel.app']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -89,12 +89,7 @@ WSGI_APPLICATION = 'smartNursingBackend.wsgi.app'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {}
 
 
 # Password validation
@@ -198,3 +193,4 @@ dictConfig({
 logger = logging.getLogger("simple")
 
 logger.error("This is a test error")
+

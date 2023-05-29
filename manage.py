@@ -3,6 +3,8 @@
 import os
 import sys
 
+from smartNursingBackend.pusherClient import initPusher
+
 
 def main():
     """Run administrative tasks."""
@@ -19,4 +21,5 @@ def main():
 
 
 if __name__ == '__main__':
+    initPusher()
     main()
