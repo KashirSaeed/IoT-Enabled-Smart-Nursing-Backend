@@ -2,8 +2,9 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+# from smartNursingBackend.mqttReceive import client
 from smartNursingBackend.pusherClient import initPusher
+import smartNursingBackend.mqttReceive
 
 
 def main():
@@ -21,5 +22,5 @@ def main():
 
 
 if __name__ == '__main__':
-    initPusher()
+    # initPusher()
     main()
