@@ -7,7 +7,11 @@ client = InfluxDBClient(url="https://us-east-1-1.aws.cloud2.influxdata.com", tok
 write_api = client.write_api(write_options=SYNCHRONOUS)
 
 
-def  postData(objects):
+def postData(objects):
     global write_api
-    data = Point("objectDetection").tag("location", "hospital").field("object name",objects).field("Blood pressure", 100.5).time(datetime.datetime.utcnow().isoformat() + 'Z').time(datetime.datetime.utcnow().isoformat() + 'Z')
-    write_api.write(bucket="Object Detection", record=data)
+    print("I CAME HERE HARD")
+    print("DATA REACHED" , objects)
+    for obj in objects['activities']:
+        data = Point("objectDetection").tag("location", "hospital").field("object name",obj).field("Blood pressure", 100.5).time(datetime.datetime.utcnow().isoformat() + 'Z').time(datetime.datetime.utcnow().isoformat() + 'Z')
+        write_api.write(bucket="Object Detection", record=data)
+    return

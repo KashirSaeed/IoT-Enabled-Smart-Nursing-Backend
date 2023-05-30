@@ -1,5 +1,6 @@
 import os
 from ssl import PROTOCOL_TLSv1_2
+import threading
 from django.dispatch import receiver
 from smartNursingBackend.signals import update_signal
 from smartNursingBackend.settings import BASE_DIR, DEFAULT_WS_PORT
@@ -11,7 +12,8 @@ import numpy as np
 import logging
 import PIL.Image as Image
 import io
-from .yolov5.detect import detect
+
+from smartNursingBackend.postData import postData
 
 # from .yolov5.detect
 
@@ -19,7 +21,6 @@ from .yolov5.detect import detect
 # from .model import *
 
 logger = logging.getLogger()
-detectObj=detect()
 
 
 class WebSocketHandler(WebSocket):
@@ -45,37 +46,11 @@ class WebSocketHandler(WebSocket):
     # WebSocket handling methods
 
     def handleMessage(self):
-        
 
-        image_64_decoded = base64.b64decode(self.data) 
-        
-        
-        imageNp = np.frombuffer(image_64_decoded, dtype = np.uint8)
-        # print("adsf",type(image_64_decoded))
-        # print("img data type",type(imageNp), "shape",imageNp.shape)
-        # img.show()
-        # nparr = np.fromstring(self.data, np.uint8)
-        # newFrame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        # cv2.imshow("s", newFrame)
-        img = cv2.imdecode(imageNp,cv2.IMREAD_COLOR) 
-        # print("frame",img.shape)
-        
-        # print(predict(img))
-
-
-        detectObj.run(im0=img)
-        # cv2.imshow("Frame",cv2.flip(img, 1) )   #show captured frame
-        # cv2.waitKey(1)    
-        
-        
-  
-         
-        # image_result = open('deer_decode.jpg', 'wb') # create a writable image and write the decoding result
-        # image_result.write(self.data)
-
-        # logger.info('Received msg "%s" from %s' % (self.data, self.address[0]))
-        # print("message received",self.data)
-        # self.sendMessage(self.data)  # Echo message back to client
+        print(self.data)
+        postThread=threading.Thread(target=postData,args=(self.data,),daemon=True)
+        postThread.start()
+        # postThread.quit()
 
     def handleConnected(self):
         logger.info('New client connected %s' % self.address[0])

@@ -1,13 +1,14 @@
 {
-    "builds": [{
-        "src": "smartNursingBackend/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "smartNursingBackend/wsgi.py"
-        }
-    ]
+  "builds": [
+    {
+      "src": "smartNursingBackend/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "smartNursingBackend/wsgi.py"
+    }
+  ]
 }
