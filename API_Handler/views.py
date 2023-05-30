@@ -88,6 +88,7 @@ def getSpecificUser(request, *args, **kwargs):
     # -----------Parameters send from frontend----------
     myEmail = kwargs['email']
     myPassword = kwargs['password']
+    isAuthenticatedByGoogle = kwargs['isAuthenticatedByGoogle']
     # ---------making connection to influxdb-----------
     client = influxdb_client.InfluxDBClient(
         url=url,
@@ -95,11 +96,19 @@ def getSpecificUser(request, *args, **kwargs):
         org=org
     )
 
-    # -----------query for reading data--------
-    query_api = client.query_api()    
-    query = f'from(bucket:"{bucket}") \
-    |> range(start: -1y) \
-    |> filter(fn:(r) => r._measurement == "{measurement}" and r.email == "{myEmail}"   and r._field == "password"  and r._value == "{myPassword}" )'
+    if(isAuthenticatedByGoogle == "false"):
+        # -----------query for reading data--------
+        query_api = client.query_api()    
+        query = f'from(bucket:"{bucket}") \
+        |> range(start: -1y) \
+        |> filter(fn:(r) => r._measurement == "{measurement}" and r.email == "{myEmail}"   and r._field == "password"  and r._value == "{myPassword}" )'
+
+    elif(isAuthenticatedByGoogle == "true"):
+        # -----------query for reading data--------
+        query_api = client.query_api()    
+        query = f'from(bucket:"{bucket}") \
+        |> range(start: -1y) \
+        |> filter(fn:(r) => r._measurement == "{measurement}" and r.email == "{myEmail}" )'
 
     result = query_api.query(org=org, query=query)
     results = []
