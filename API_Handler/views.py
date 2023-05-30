@@ -153,7 +153,7 @@ def getSpecificUser(request, *args, **kwargs):
 
 #     return JsonResponse({},safe=False)
 # example/views.py
-from datetime import datetime
+# from datetime import datetime
 from django.http import HttpResponse
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
