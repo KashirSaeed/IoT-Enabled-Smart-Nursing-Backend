@@ -28,7 +28,6 @@ urlpatterns = [
     path('user/<str:email>/<str:password>/<str:isAuthenticatedByGoogle>/',views.getSpecificUser,name='getSpecificUser'),
     # path('user/<str:usertype>/',views.addingUsertype,name='getSpecificUser')
 
-
     path('fetch/', include('API_Handler.urls')),
     path('count/',include('API_Handler.urls'))
 ]

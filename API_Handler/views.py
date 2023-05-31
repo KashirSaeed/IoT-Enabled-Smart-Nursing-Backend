@@ -12,6 +12,13 @@ from django.http import HttpResponse
 import datetime
 # import the logging library
 import logging
+
+from django.http import HttpResponse
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import SYNCHRONOUS
+from django.http import JsonResponse
+import json
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 # creating .log file per day
@@ -46,6 +53,7 @@ def postUserData(request):
     myUsername = data.get('myUsername')
     myEmail = data.get('myEmail')
     myPassword = data.get('myPassword')
+    isAuthenticatedByGoogle = data.get('isAuthenticatedByGoogle')
 
     # -------------Create an InfluxDB client------------
     client = InfluxDBClient(url=url, token=token, org=org)
@@ -64,7 +72,7 @@ def postUserData(request):
     if(len(results) == 0 ):
         # ----------code for posting data----------
         # Define the data to be written
-        data = Point(measurement).field("username", myUsername).tag("email",myEmail).field("password", myPassword).time(datetime.datetime.utcnow().isoformat() + 'Z')
+        data = Point(measurement).field("isAuthenticatedByGoogle", isAuthenticatedByGoogle).field("username", myUsername).tag("email",myEmail).field("password", myPassword).time(datetime.datetime.utcnow().isoformat() + 'Z')
         # Create a write API instance
         write_api = client.write_api(write_options=SYNCHRONOUS)
         # Write the data to the bucket
@@ -89,6 +97,7 @@ def getSpecificUser(request, *args, **kwargs):
     myEmail = kwargs['email']
     myPassword = kwargs['password']
     isAuthenticatedByGoogle = kwargs['isAuthenticatedByGoogle']
+
     # ---------making connection to influxdb-----------
     client = influxdb_client.InfluxDBClient(
         url=url,
@@ -123,8 +132,6 @@ def getSpecificUser(request, *args, **kwargs):
         return JsonResponse({"response":"true"},safe=False)
 
 
-    
-
 # @csrf_exempt
 # def addingUsertype(request , *args, **kwargs)  :
 #     print("I am in--------")
@@ -150,29 +157,9 @@ def getSpecificUser(request, *args, **kwargs):
 #     # Close the InfluxDB client
 #     client.close()
    
-
 #     return JsonResponse({},safe=False)
 # example/views.py
 # from datetime import datetime
-from django.http import HttpResponse
-from influxdb_client import InfluxDBClient, Point
-from influxdb_client.client.write_api import SYNCHRONOUS
-from django.http import JsonResponse
-import json
-
-# import datetime
-# # import the logging library
-# import logging
-# # Get an instance of a logger
-# logger = logging.getLogger(__name__)
-# # creating .log file per day
-# from logging.handlers import TimedRotatingFileHandler
-# logname = "logs/logsContainer.log"
-# handler = TimedRotatingFileHandler(logname, when="midnight", backupCount=30)
-# handler.suffix = "%Y%m%d"
-# logger.addHandler(handler)
-
-
 
 def index(request):
     # logger.warning('Homepage was accessed at '+str(datetime.datetime.now())+' hours!')
@@ -187,7 +174,6 @@ def index(request):
     '''
     return HttpResponse(html)
 
-
 # Declaring an object with parameters initialised
 url = "https://us-east-1-1.aws.cloud2.influxdata.com"
 org = "1936be69c64da4d7"
@@ -196,7 +182,6 @@ bucket = "Object Detection"
 client = InfluxDBClient(url=url, token=token, org=org)
 
 def count_influx(request):
-
     query = f'from(bucket:"{bucket}")|> range(start: -30d)|> count()'
     result = client.query_api().query(query)
     try:
@@ -206,11 +191,8 @@ def count_influx(request):
     return HttpResponse(response)
 
 def fetch_from_influx(request):
-
     query = f'from(bucket:"{bucket}")|> range(start: -30d)|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|>limit(n: 10)'
-
     result = client.query_api().query(query)
-
     json_result = []
     for table in result:
         for record in table.records:
