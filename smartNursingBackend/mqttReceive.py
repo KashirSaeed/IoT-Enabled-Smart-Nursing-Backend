@@ -59,14 +59,9 @@ class HiveMqtt():
     # print message, useful for checking if it was successful
     def on_message(self,client, userdata, msg):
         data = {"activities":msg.payload.decode()}
-        # print(data)
-        # print(type(data))
-        print(msg.payload)
-        # print(msg.topic + " " + str(msg.qos) + " " + msg.payload.decode())
         try:
-            # postThread=threading.Thread(target= postData,args=(data,))
-            # postThread.start()
-            print(time.time())
+            postThread=threading.Thread(target= postData,args=(data,))
+            postThread.start()
         except Exception as e:
             print("Error sending data to db" , e)
         return
