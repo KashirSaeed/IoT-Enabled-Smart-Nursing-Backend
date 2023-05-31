@@ -15,7 +15,6 @@ import io
 
 from smartNursingBackend.postData import postData
 
-# from .yolov5.detect
 
 
 # from .model import *

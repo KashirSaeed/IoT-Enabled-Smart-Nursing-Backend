@@ -20,5 +20,6 @@ urlpatterns = [
     path('', include('API_Handler.urls')),
     path('admin/', admin.site.urls),
     path('fetch/', include('API_Handler.urls')),
-    path('count/',include('API_Handler.urls'))
+    path('count/',include('API_Handler.urls')),
+    
 ]
