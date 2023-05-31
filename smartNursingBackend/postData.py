@@ -13,7 +13,9 @@ import random
 
 def postData(objects):
     global write_api
-    for obj in objects['activity']:
+    csv_array = objects['activities'].split(",")
+    print("Sending Data to Influx")
+    for obj in csv_array:
         random_number = random.randint(60, 100)
         data = Point("objectDetection").tag("location", "hospital").field("object name",obj).field("Blood pressure", random_number).time(datetime.datetime.utcnow().isoformat() + 'Z').time(datetime.datetime.utcnow().isoformat() + 'Z')
         write_api.write(bucket="Object Detection", record=data)
