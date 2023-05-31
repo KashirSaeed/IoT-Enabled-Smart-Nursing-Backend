@@ -9,7 +9,7 @@ from smartNursingBackend.postData import postData
 
 pusher = ''
 clientPusher = ''
-
+counter = 0
 def initPusher():
     global pusher
     global clientPusher
@@ -27,10 +27,19 @@ def connectHandler(data):
 
 ''' This function is called once pusher receives a new event '''
 def pusherCallback(message):
+    global counter
     data = json.loads(message)
-    print("Receiving Data from pusher",data['activity'])
+    # counter+=1
+    # print("*****************************************")  
+    # print("Thread Counts",threading.active_count())
+    # print('Receiving Data from pusher' + str(counter),data)
+    # # print("Check Counter",counter)
+    # print("*****************************************")
+    
+    # return
     try:
-        postThread=threading.Thread(target=postData,args=(data['activity'],), daemon=True)
+        postThread=threading.Thread(target=postData,args=(data,))
         postThread.start()
     except Exception as e:
         print("Error sending data to db" , e)
+    return
