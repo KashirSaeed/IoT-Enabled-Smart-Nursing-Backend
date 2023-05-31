@@ -11,3 +11,5 @@ Homepage was accessed at 2023-05-31 14:23:33.234833 hours!
 [2023-05-31 14:25:10,894] INFO in logging: This is a test error
 [2023-05-31 14:25:23,301] INFO in logging: Logger Started
 Homepage was accessed at 2023-05-31 14:25:24.259645 hours!
+[2023-05-31 14:59:20,540] INFO in myLogger: Logger Started
+Homepage was accessed at 2023-05-31 14:59:31.834542 hours!

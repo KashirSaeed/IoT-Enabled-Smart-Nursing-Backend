@@ -11,7 +11,7 @@ import os
 import atexit
 from smartNursingBackend.pusherClient import initPusher,killPusher
 from django.core.wsgi import get_wsgi_application
-import smartNursingBackend.logging as logger
+import smartNursingBackend.myLogger as logger
 
 def cleanup_function():
     # mqinstance = HiveMqtt()
@@ -26,7 +26,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartNursingBackend.settings')
 
 app = get_wsgi_application()
 # mqInstance = HiveMqtt()
-# logger.initLogger()
+logger.initLogger()
 initPusher()
 
 
