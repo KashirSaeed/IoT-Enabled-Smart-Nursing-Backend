@@ -26,7 +26,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartNursingBackend.settings')
 
 app = get_wsgi_application()
 # mqInstance = HiveMqtt()
-logger.initLogger()
+# logger.initLogger()
 initPusher()
 
 
