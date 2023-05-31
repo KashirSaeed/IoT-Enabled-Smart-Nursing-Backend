@@ -8,20 +8,20 @@ import json
 
 # import datetime
 # import the logging library
-import logging
+# import logging
 # Get an instance of a logger
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 # creating .log file per day
-from logging.handlers import TimedRotatingFileHandler
-logname = "logs/logsContainer.log"
-handler = TimedRotatingFileHandler(logname, when="midnight", backupCount=30)
-handler.suffix = "%Y%m%d"
-logger.addHandler(handler)
+# from logging.handlers import TimedRotatingFileHandler
+# logname = "logs/logsContainer.log"
+# handler = TimedRotatingFileHandler(logname, when="midnight", backupCount=30)
+# handler.suffix = "%Y%m%d"
+# logger.addHandler(handler)
 
 
 
 def index(request):
-    logger.warning('Homepage was accessed at '+str(datetime.now())+' hours!')
+    # logger.warning('Homepage was accessed at '+str(datetime.now())+' hours!')
     now = datetime.now()
     html = f'''
     <html>
