@@ -4,7 +4,7 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.views import APIView
+# from rest_framework.views import APIView
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 # Create your views here.
@@ -38,10 +38,6 @@ token = "R4yVXBDI84LlpaZijvjNMrhl-8m-67S_gUNhON9CXISLLSEwKP4Oaeykw8UaF-wq5rQs4_k
 url = "https://us-east-1-1.aws.cloud2.influxdata.com"
 measurement = "User"
 
-# ------------Sample Page--------------
-def hello_reader(request):
-    logger.warning('Homepage was accessed at '+str(datetime.datetime.now())+' hours!')
-    return HttpResponse("<h1>Created Django Application </h1>")
 # --------------Posting the data in influxdb-----------
 @csrf_exempt
 def postUserData(request):
@@ -62,9 +58,7 @@ def postUserData(request):
     client = InfluxDBClient(url=url, token=token, org=org)
     # ----------Query for checking whether user with same email exist--------
     query_api = client.query_api()
-    query = f'from(bucket:"{bucket}") \
-    |> range(start: -1y) \
-    |> filter(fn:(r) => r._measurement == "{measurement}" and r.email == "{myEmail}" )'
+    query = f'from(bucket:"{bucket}")|> range(start: -1y)|> filter(fn:(r) => r._measurement == "{measurement}" and r.email == "{myEmail}" )'
     # ----------append data in array-----------
     result = query_api.query(org=org, query=query)
     results = []
@@ -85,9 +79,9 @@ def postUserData(request):
         print("--------------user registered successfully------------")
         response = json.dumps(data, default=str)
         return JsonResponse(response,safe=False)
-    else:
-        print("--------------Already Exist User------------")
-        return JsonResponse({"response":"Already Exist User"},safe=False)
+    print("--------------Already Exist User------------")
+    return JsonResponse({"response":"Already Exist User"},safe=False)
+    
 
 def getSpecificUser(request, *args, **kwargs):
     # --------using glpbal variables--------
@@ -181,13 +175,13 @@ def index(request):
 url = "https://us-east-1-1.aws.cloud2.influxdata.com"
 org = "1936be69c64da4d7"
 token = "R4yVXBDI84LlpaZijvjNMrhl-8m-67S_gUNhON9CXISLLSEwKP4Oaeykw8UaF-wq5rQs4_kismihsVNBCC3vVQ=="
-bucket = "Object Detection"
+databucket = "Object Detection"
 client = InfluxDBClient(url=url, token=token, org=org)
 
 def count_influx(request):
 
-    query = f'from(bucket:"{bucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "objectDetection")|> count()'
-    query = f'from(bucket:"{bucket}")|> range(start: -30d)|> count()'
+    query = f'from(bucket:"{databucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "objectDetection")|> count()'
+
     result = client.query_api().query(query)
     try:
         response = result[0].records[0].values['_value']
@@ -197,9 +191,8 @@ def count_influx(request):
 
 def fetch_from_influx(request):
 
-    query = f'from(bucket:"{bucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "objectDetection")|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> sort(columns: ["_time"], desc: true)|>limit(n: 10)'
+    query = f'from(bucket:"{databucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "objectDetection")|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> sort(columns: ["_time"], desc: true)|>limit(n: 10)'
 
-    query = f'from(bucket:"{bucket}")|> range(start: -30d)|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|>limit(n: 10)'
     result = client.query_api().query(query)
     json_result = []
     for table in result:
