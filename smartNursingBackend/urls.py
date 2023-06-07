@@ -27,5 +27,7 @@ urlpatterns = [
     # path('user/<str:usertype>/',views.addingUsertype,name='getSpecificUser')
     path('fetch/', include('API_Handler.urls')),
     path('count/',include('API_Handler.urls')),
+    path('test/', views.hello_reader),
+
     
 ]

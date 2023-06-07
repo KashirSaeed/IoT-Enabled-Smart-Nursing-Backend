@@ -8,6 +8,14 @@ import influxdb_client
 from django.http import HttpResponse
 import datetime
 import logging
+import threading
+import schedule
+import time
+import os
+
+newLogFileNamesArray = []
+
+
 # ------------Get an instance of a logger------------
 logger = logging.getLogger(__name__)
 # -----------creating .log file per day--------
@@ -17,9 +25,9 @@ handler = TimedRotatingFileHandler(logname, when="midnight", backupCount=30)
 handler.suffix = "%Y%m%d"
 logger.addHandler(handler)
 
+
 # ---------Credentials of influxdb-------------
-databucket = "Users"
-# databucket = "Object Detection"
+databucket = "Object Detection"
 org = "1936be69c64da4d7"
 token = "R4yVXBDI84LlpaZijvjNMrhl-8m-67S_gUNhON9CXISLLSEwKP4Oaeykw8UaF-wq5rQs4_kismihsVNBCC3vVQ=="
 url = "https://us-east-1-1.aws.cloud2.influxdata.com"
@@ -163,32 +171,96 @@ def fetch_from_influx(request):
 
 
 
-
-# --------------
-
-import threading
-
-# Define a function to be executed in the separate thread
-def my_function():
-    # Your code goes here...
-    import schedule
-    import time
+def firstThread():
     def job():
-        print("I'm working...")
-    schedule.every().day.at("14:50").do(job)
+        global newLogFileNamesArray
+        newLogFileNamesArray = readDataFromFile('logFileNames.txt')
+        if(len(newLogFileNamesArray) != 0):
+            for i in range(len(newLogFileNamesArray)):
+                print("logs\{}".format(newLogFileNamesArray[i]))
+                infile = r"logs\{}".format(newLogFileNamesArray[i])
+                with open(infile) as f:
+                    f = f.readlines()
+                logsArray=[]
+                for index, item in enumerate(f):
+                    logsArray.append(item)
+                    print(item)
+                    postData(item)
+                print(logsArray)
+            deleteDataFromFile('logFileNames.txt')
+        
+    schedule.every().day.at("00:02").do(job)
     
-    def job_with_argument(name):
-        print(f"I am {name}")
-
-    schedule.every(10).seconds.do(job_with_argument, name="Peter")
-
     while True:
         schedule.run_pending()
         time.sleep(1)
     print("Running in the separate thread.")
 
+def secondThread():
+    global newLogFileNamesArray
+    # Define the directory to monitor
+    directory = 'logs'
+    # Get the initial list of files in the directory
+    initial_files = os.listdir(directory)
+    while True:
+        # Wait for a certain time interval
+        time.sleep(5)  # Adjust the interval as per your requirement
+        # Get the updated list of files in the directory
+        updated_files = os.listdir(directory)
+        # Find the difference between the initial and updated file lists
+        new_files = list(set(updated_files) - set(initial_files))
+        # Check if any new files are generated
+        if new_files:
+            for file in new_files:
+                print(f"New file generated: {file}")
+                # newLogFileNamesArray.append(file)
+                writeDataToFile('logFileNames.txt',file)
+        # Update the initial file list for the next iteration
+        initial_files = updated_files
+    print("Running in the separate thread.")
+
 # Create a thread object with your function
-my_thread = threading.Thread(target=my_function)
+myThread1 = threading.Thread(target=firstThread)
+myThread2 = threading.Thread(target=secondThread)
 
 # Start the thread
-my_thread.start()
+myThread1.start()
+myThread2.start()
+
+def postData(logsData):
+    global client
+    # Define the data to be written
+    data = Point("logs").field("logs",logsData).time(datetime.datetime.utcnow().isoformat() + 'Z')
+    # Create a write API instance
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+    # Write the data to the bucket
+    write_api.write(bucket="Logs", record=data)
+    # Close the write API
+    write_api.close()
+
+def hello_reader(request):
+    logger.warning('Homepage was accessed at '+str(datetime.datetime.now())+' hours!')
+    return HttpResponse("<h1>Created Django Application </h1>")
+
+def writeDataToFile(fileName,data):
+    with open(fileName, 'a') as f:
+        f.write(data)
+        f.write('\n')
+
+def readDataFromFile(fileName):
+    file = open(fileName, 'r')
+    array=[]
+    while True:
+        line = file.readline()
+        if not line:
+            break
+        array.append(line[:-1])
+    return array
+    file.close()
+
+def deleteDataFromFile(fileName):
+    open(fileName , 'w').close()
+    
+
+
+
