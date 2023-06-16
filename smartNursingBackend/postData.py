@@ -21,3 +21,44 @@ def postData(objects):
         write_api.write(bucket="Object Detection", record=data)
 
     return
+
+def activityDetector(allActivities , oldActivities):
+    currentObjectsCounter = getTotalObjectsNumber(allActivities)
+    oldObjectsCounter = getTotalObjectsNumber(oldActivities)
+    currentObjects = []
+    oldObjects = []
+
+    for i in range(currentObjectsCounter):
+        currentObjects.append(getField(allActivities,i))    
+
+    for i in range(oldObjectsCounter):
+        oldObjects.append(getField(oldActivities,i))
+
+    print("Current Objects:"+"    "+str(currentObjects))
+    print("Old Objects:"+"    "+str(oldObjects))
+
+    for i in range(currentObjectsCounter):
+        if currentObjects[i] not in oldObjects:
+            print("Oject to be inserted:"+"    "+str(currentObjects[i])) 
+            postData(currentObjects[i])
+
+
+def getField(record,position):
+    idx=7
+    firstspace=0
+    naam=""
+    while( firstspace < position+1 and idx < len(record)):
+        if(record[idx] == ','):
+            firstspace=firstspace+1
+        elif(firstspace == position):
+            naam=naam+record[idx]
+        idx=idx+1
+    return naam
+
+
+def getTotalObjectsNumber(record):
+    counter = 0
+    for i in range(len(record)):
+        if(record[i] == ","):
+            counter = counter + 1
+    return counter
