@@ -23,13 +23,13 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('API_Handler.urls')),
     path('admin/', admin.site.urls),
-    path('userData/',views.postUserData,name='userData'),
-    path('user/<str:email>/<str:password>/<str:isAuthenticatedByGoogle>/',views.getSpecificUser,name='getSpecificUser'),
-    # path('user/<str:usertype>/',views.addingUsertype,name='getSpecificUser')
+    path('userData/', include('API_Handler.urls')),
+    path('user/<str:email>/<str:password>/<str:isAuthenticatedByGoogle>/', include('API_Handler.urls')),
     path('fetch/', include('API_Handler.urls')),
     path('count/',include('API_Handler.urls')),
     path('test/', views.hello_reader),
 
     
     path('image_id/',include('API_Handler.urls'))
+  
 ]

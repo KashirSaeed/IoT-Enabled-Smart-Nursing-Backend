@@ -2,6 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import logging
+from datetime import datetime
+
+from smartNursingBackend.settings import logger
 
 def main():
     """Run administrative tasks."""
@@ -9,6 +13,7 @@ def main():
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
+        logger.warning(str(exc)+str(datetime.now())+' hours!')
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "
             "available on your PYTHONPATH environment variable? Did you "

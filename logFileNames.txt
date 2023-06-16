@@ -1,0 +1,4 @@
+a.log
+ab.log
+abc.log
+a.log
