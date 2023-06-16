@@ -6,18 +6,14 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 # from rest_framework.views import APIView
 import influxdb_client
-from influxdb_client.client.write_api import SYNCHRONOUS
 # Create your views here.
 from django.http import HttpResponse
 import datetime
 # import the logging library
 import logging
 
-from django.http import HttpResponse
 from influxdb_client import InfluxDBClient, Point
-from influxdb_client.client.write_api import SYNCHRONOUS
-from django.http import JsonResponse
-import json
+
 
 # import datetime
 # import the logging library
@@ -32,7 +28,7 @@ handler.suffix = "%Y%m%d"
 logger.addHandler(handler)
 
 # ---------Credentials of influxdb-------------
-bucket = "Users"
+bucket = "Object Detection"
 org = "1936be69c64da4d7"
 token = "R4yVXBDI84LlpaZijvjNMrhl-8m-67S_gUNhON9CXISLLSEwKP4Oaeykw8UaF-wq5rQs4_kismihsVNBCC3vVQ=="
 url = "https://us-east-1-1.aws.cloud2.influxdata.com"
@@ -122,11 +118,12 @@ def getSpecificUser(request, *args, **kwargs):
         for record in table.records:
             results.append((record.get_field(), record.get_value()))
 
-    print(results)
     if(len(results) == 0 ):
         return JsonResponse({"response":"false"},safe=False)
     else:
-        return JsonResponse({"response":"true"},safe=False)
+        access_token=create_access_token(myEmail)
+        
+        return JsonResponse({"response":"true","token":access_token},safe=False)
 
 
 # @csrf_exempt
@@ -195,6 +192,25 @@ def fetch_from_influx(request):
 
     result = client.query_api().query(query)
     json_result = []
+    for table in result:
+        for record in table.records:
+            # Get timestamp from FluxRecord object
+            record_time = record.get_time().strftime('%Y-%m-%dT%H:%M:%SZ')
+            record_values = record.values
+            # Add time field to record_values dictionary
+            record_values['time'] = record_time
+            json_result.append(record_values)
+
+    # Return the JSON object as a web response
+    response = json.dumps(json_result, default=str)
+
+    # Return a success response
+    return JsonResponse(response,safe=False)
+
+def fetch_images_ids(request):
+    query = f'from(bucket:"{databucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "ImagesOnDrive")|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> sort(columns: ["_time"], desc: true)|>limit(n: 10)'
+    result = client.query_api().query(query)
+    json_result=[]
     for table in result:
         for record in table.records:
             # Get timestamp from FluxRecord object
