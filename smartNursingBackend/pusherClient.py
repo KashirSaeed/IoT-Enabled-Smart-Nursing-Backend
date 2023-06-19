@@ -5,7 +5,7 @@ from pusher import Pusher
 import pysher
 from smartNursingBackend.settings import logger
 import datetime
-from smartNursingBackend.postData import postData
+from smartNursingBackend.postData import postData,sendActs
 
 
 def initPusher():
@@ -29,11 +29,17 @@ def pusherCallback(message):
     global counter
     data = json.loads(message)
     try:
-        logger.warning('Pushing Data over Pusher Channel '+str(datetime.datetime.now())+' hours!')
-        postThread=threading.Thread(target=postData,args=(data,))
-        postThread.start()
+        logger.warning('Creating Thread to Post Data to Influx'+str(datetime.datetime.now())+' hours!')
+
+        if 'objects' in data:
+            postThread=threading.Thread(target=postData,args=(data,))
+            postThread.start()
+        elif 'activity' in data:
+            postThread=threading.Thread(target=sendActs,args=(data,))
+            postThread.start()
     except Exception as e:
-        logger.warning("Error pushing data "+str(e)+str(datetime.datetime.now())+' hours!')
+        print("error",e)
+        logger.warning("Error Starting Influx Thread "+str(e)+str(datetime.datetime.now())+' hours!')
     return
     
 def killPusher():
