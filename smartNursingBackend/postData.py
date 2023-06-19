@@ -13,11 +13,23 @@ import random
 
 def postData(objects):
     global write_api
-    csv_array = objects['activities'].split(",")
-    print("Sending Data to Influx")
+    # csv_array = objects['objects'].split(",")
+    csv_array = objects['objects']
+    print("Sending objects to Influx")
     for obj in csv_array:
-        random_number = random.randint(60, 100)
+        random_number = random.randint(40, 100)
+        # heart_rate = random.randint(50,120)
         data = Point("objectDetection").tag("location", "hospital").field("object name",obj).field("Blood pressure", random_number).time(datetime.datetime.utcnow().isoformat() + 'Z').time(datetime.datetime.utcnow().isoformat() + 'Z')
         write_api.write(bucket="Object Detection", record=data)
 
     return
+def sendActs(acts):
+    global write_api
+    data = acts['activity']
+    print("Sending activities to Influx")
+    for item in data:
+        activity = item['activity']
+        startTime = item['startTime']
+        endTime = item['endTime']
+        data = Point("activityDetection").tag("location", "hospital").field("Activity",activity).field("StartTime", startTime).field("EndTime",endTime).time(datetime.datetime.utcnow().isoformat() + 'Z').time(datetime.datetime.utcnow().isoformat() + 'Z')
+        write_api.write(bucket="Object Detection", record=data)
