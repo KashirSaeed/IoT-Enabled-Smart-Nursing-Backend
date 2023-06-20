@@ -27,7 +27,6 @@ urlpatterns = [
     path('user/<str:email>/<str:password>/<str:isAuthenticatedByGoogle>/', include('API_Handler.urls')),
     path('fetch/', include('API_Handler.urls')),
     path('count/',include('API_Handler.urls')),
-    path('test/', views.hello_reader),
 
     
     path('image_id/',include('API_Handler.urls'))
