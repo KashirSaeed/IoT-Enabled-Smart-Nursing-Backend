@@ -174,5 +174,5 @@ dictConfig({
 logger = logging.getLogger("simple")
 
 
-CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','http://localhost:3000']
+# CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','http://localhost:3000']
 # logger.error("This is a test error")

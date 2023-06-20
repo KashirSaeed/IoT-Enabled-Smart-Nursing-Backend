@@ -62,7 +62,34 @@ def count_influx(request):
 def fetch_from_influx(request):
     logger.warning('Accessing objects '+str(datetime.datetime.now())+' hours!')
     try:
-        query = f'from(bucket:"{"databucket"}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "objectDetection")|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> sort(columns: ["_time"], desc: true)|>limit(n: 10)'
+        query = f'from(bucket:"{databucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "objectDetection")|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> sort(columns: ["_time"], desc: true)|>limit(n: 100)'
+        result = client.query_api().query(query)
+        json_result = []
+        for table in result:
+            for record in table.records:
+                # Get timestamp from FluxRecord object
+                record_time = record.get_time().strftime('%Y-%m-%dT%H:%M:%SZ')
+                record_values = record.values
+                # Add time field to record_values dictionary
+                record_values['time'] = record_time
+                json_result.append(record_values)
+        # print(json_result)
+        return JsonResponse(json_result,safe=False)
+    except Exception as e:
+        
+        print(e)
+        logger.warning("Error in fetching data from influx" + str(datetime.datetime.now())+' hours!')
+        return JsonResponse({'message':"Error Sending Response"},status=404)
+
+
+
+def fetchUserSpecificData(request, *args, **kwargs):
+    
+    userId = kwargs['email']
+    logger.warning('Accessing objects with User Id'+str(datetime.datetime.now())+' hours!')
+    
+    try:
+        query = f'from(bucket:"{databucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "objectDetection" and  r["HospitalID"] == "{userId}")|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> sort(columns: ["_time"], desc: true)|>limit(n: 100)'
         result = client.query_api().query(query)
         json_result = []
         for table in result:
@@ -75,11 +102,11 @@ def fetch_from_influx(request):
                 json_result.append(record_values)
         
         return JsonResponse(json_result,safe=False)
-    except:
+    except Exception as e:
+        
+        print(e)
         logger.warning("Error in fetching data from influx" + str(datetime.datetime.now())+' hours!')
-
-
-
+        return JsonResponse({'message':"Error Sending Response"},status=404)
 
 
 def fetch_images_ids(request):
