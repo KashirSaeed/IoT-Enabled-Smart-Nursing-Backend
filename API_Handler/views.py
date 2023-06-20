@@ -113,6 +113,7 @@ def fetch_images_ids(request):
     query = f'from(bucket:"{databucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "ImagesOnDrive")|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> sort(columns: ["_time"], desc: true)|>limit(n: 10)'
     result = client.query_api().query(query)
     json_result=[]
+    imageIdArray=[]
     for table in result:
         for record in table.records:
             # Get timestamp from FluxRecord object
@@ -122,8 +123,5 @@ def fetch_images_ids(request):
             record_values['time'] = record_time
             json_result.append(record_values)
 
-    # Return the JSON object as a web response
-    response = json.dumps(json_result, default=str)
+    return JsonResponse(json_result,safe=False)
 
-    # Return a success response
-    return JsonResponse(response,safe=False)

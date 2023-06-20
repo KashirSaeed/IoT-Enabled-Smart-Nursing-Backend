@@ -28,6 +28,7 @@ urlpatterns = [
     path('fetch/', include('API_Handler.urls')),
     path('count/',include('API_Handler.urls')),
     path('fetchUserData/',include('API_Handler.urls')),
+
     
     path('image_id/',include('API_Handler.urls'))
   

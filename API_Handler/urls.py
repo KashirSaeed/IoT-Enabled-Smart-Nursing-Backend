@@ -11,6 +11,7 @@ urlpatterns = [
     path('count/',count_influx),
     path('image_id/',fetch_images_ids),
     path('fetchUserData/<str:email>/',fetchUserSpecificData),
+    
     path('userData/',postUserData),
     path('user/<str:email>/<str:password>/<str:isAuthenticatedByGoogle>/',getSpecificUser),
 ]
