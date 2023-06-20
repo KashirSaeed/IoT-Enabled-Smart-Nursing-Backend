@@ -9,7 +9,7 @@ urlpatterns = [
     path('', index),
     path('fetch/',fetch_from_influx),
     path('count/',count_influx),
-    path('image_id/',fetch_images_ids)
+    path('image_id/',fetch_images_ids),
     
     path('userData/',postUserData),
     path('user/<str:email>/<str:password>/<str:isAuthenticatedByGoogle>/',getSpecificUser),
