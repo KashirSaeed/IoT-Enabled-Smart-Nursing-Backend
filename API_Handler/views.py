@@ -73,11 +73,10 @@ def fetch_from_influx(request):
                 # Add time field to record_values dictionary
                 record_values['time'] = record_time
                 json_result.append(record_values)
-        # print(json_result)
         return JsonResponse(json_result,safe=False)
     except Exception as e:
         
-        print(e)
+        print("Exception:",e)
         logger.warning("Error in fetching data from influx" + str(datetime.datetime.now())+' hours!')
         return JsonResponse({'message':"Error Sending Response"},status=404)
 
@@ -100,8 +99,20 @@ def fetchUserSpecificData(request, *args, **kwargs):
                 # Add time field to record_values dictionary
                 record_values['time'] = record_time
                 json_result.append(record_values)
+        query = f'from(bucket:"{databucket}")|> range(start: -30d)|> filter(fn: (r) => r._measurement == "activityDetection")|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")|> sort(columns: ["_time"], desc: true)|>limit(n: 5)'
+        result = client.query_api().query(query)
+        json_result2 = []
+        for table in result:
+            for record in table.records:
+                # Get timestamp from FluxRecord object
+                record_time = record.get_time().strftime('%Y-%m-%dT%H:%M:%SZ')
+                record_values = record.values
+                # Add time field to record_values dictionary
+                record_values['time'] = record_time
+                json_result2.append(record_values)
+        output = json_result+json_result2
         
-        return JsonResponse(json_result,safe=False)
+        return JsonResponse(output,safe=False)
     except Exception as e:
         
         print(e)
