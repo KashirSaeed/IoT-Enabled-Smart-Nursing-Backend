@@ -1,0 +1,12 @@
+[2023-06-18 13:09:32,691] WARNING in views: Accessing objects 2023-06-18 13:09:32.691237 hours!
+[2023-06-18 13:09:32,775] WARNING in myLogger: Attempt to writing data in logFileNames.txt file2023-06-18 13:09:32.775770 hours!
+[2023-06-18 13:09:33,373] WARNING in views: Error in fetching data from influx2023-06-18 13:09:33.373871 hours!
+[2023-06-18 13:11:53,745] WARNING in views: Accessing objects 2023-06-18 13:11:53.745579 hours!
+Accessing objects 2023-06-18 13:11:53.745579 hours!
+[2023-06-18 13:11:54,207] WARNING in views: Error in fetching data from influx2023-06-18 13:11:54.207973 hours!
+Error in fetching data from influx2023-06-18 13:11:54.207973 hours!
+[2023-06-18 13:13:27,652] WARNING in views: Accessing objects 2023-06-18 13:13:27.652937 hours!
+Accessing objects 2023-06-18 13:13:27.652937 hours!
+[2023-06-20 15:46:59,013] WARNING in pusherClient: Initialising Pusher 2023-06-20 15:46:59.013708 hours!
+Initialising Pusher 2023-06-20 15:46:59.013708 hours!
+[2023-06-20 16:01:08,846] WARNING in pusherClient: Killing Pusher at 2023-06-20 16:01:08.832166 hours!

@@ -1,9 +1,36 @@
-[2023-06-18 13:09:32,691] WARNING in views: Accessing objects 2023-06-18 13:09:32.691237 hours!
-[2023-06-18 13:09:32,775] WARNING in myLogger: Attempt to writing data in logFileNames.txt file2023-06-18 13:09:32.775770 hours!
-[2023-06-18 13:09:33,373] WARNING in views: Error in fetching data from influx2023-06-18 13:09:33.373871 hours!
-[2023-06-18 13:11:53,745] WARNING in views: Accessing objects 2023-06-18 13:11:53.745579 hours!
-Accessing objects 2023-06-18 13:11:53.745579 hours!
-[2023-06-18 13:11:54,207] WARNING in views: Error in fetching data from influx2023-06-18 13:11:54.207973 hours!
-Error in fetching data from influx2023-06-18 13:11:54.207973 hours!
-[2023-06-18 13:13:27,652] WARNING in views: Accessing objects 2023-06-18 13:13:27.652937 hours!
-Accessing objects 2023-06-18 13:13:27.652937 hours!
+[2023-06-23 18:51:07,215] WARNING in pusherClient: Initialising Pusher 2023-06-23 18:51:07.215106 hours!
+[2023-06-23 18:52:28,459] WARNING in pusherClient: Killing Pusher at 2023-06-23 18:52:28.459208 hours!
+[2023-06-23 18:52:37,617] WARNING in pusherClient: Initialising Pusher 2023-06-23 18:52:37.617622 hours!
+Initialising Pusher 2023-06-23 18:52:37.617622 hours!
+[2023-06-23 19:30:52,195] WARNING in pusherClient: Killing Pusher at 2023-06-23 19:30:52.195858 hours!
+Killing Pusher at 2023-06-23 19:30:52.195858 hours!
+[2023-06-24 00:26:08,924] WARNING in pusherClient: Initialising Pusher 2023-06-24 00:26:08.924744 hours!
+[2023-06-24 00:26:24,351] WARNING in pusherClient: Killing Pusher at 2023-06-24 00:26:24.351111 hours!
+[2023-06-24 00:26:37,139] WARNING in pusherClient: Initialising Pusher 2023-06-24 00:26:37.139082 hours!
+Initialising Pusher 2023-06-24 00:26:37.139082 hours!
+[2023-06-24 00:30:43,969] WARNING in signUp: Attemp to post user data 2023-06-24 00:30:43.968262 hours!
+Attemp to post user data 2023-06-24 00:30:43.968262 hours!
+[2023-06-24 00:30:52,650] WARNING in signIn: Attempt to sign in user  2023-06-24 00:30:52.650558 hours!
+Attempt to sign in user  2023-06-24 00:30:52.650558 hours!
+[2023-06-24 00:42:07,807] WARNING in pusherClient: Killing Pusher at 2023-06-24 00:42:07.807007 hours!
+Killing Pusher at 2023-06-24 00:42:07.807007 hours!
+[2023-06-24 00:42:14,516] WARNING in pusherClient: Initialising Pusher 2023-06-24 00:42:14.516990 hours!
+Initialising Pusher 2023-06-24 00:42:14.516990 hours!
+[2023-06-24 00:42:15,252] WARNING in views: Accessing objects with User Id2023-06-24 00:42:15.252789 hours!
+Accessing objects with User Id2023-06-24 00:42:15.252789 hours!
+[2023-06-24 00:42:25,178] WARNING in views: Accessing objects with User Id2023-06-24 00:42:25.178183 hours!
+Accessing objects with User Id2023-06-24 00:42:25.178183 hours!
+[2023-06-24 00:42:34,742] WARNING in views: Accessing objects with User Id2023-06-24 00:42:34.742940 hours!
+Accessing objects with User Id2023-06-24 00:42:34.742940 hours!
+[2023-06-24 00:42:44,753] WARNING in views: Accessing objects with User Id2023-06-24 00:42:44.753115 hours!
+Accessing objects with User Id2023-06-24 00:42:44.753115 hours!
+[2023-06-24 00:42:54,742] WARNING in views: Accessing objects with User Id2023-06-24 00:42:54.742479 hours!
+Accessing objects with User Id2023-06-24 00:42:54.742479 hours!
+[2023-06-24 00:43:04,753] WARNING in views: Accessing objects with User Id2023-06-24 00:43:04.753070 hours!
+Accessing objects with User Id2023-06-24 00:43:04.753070 hours!
+[2023-06-24 00:46:40,217] WARNING in views: Accessing objects with User Id2023-06-24 00:46:40.217787 hours!
+Accessing objects with User Id2023-06-24 00:46:40.217787 hours!
+[2023-06-24 00:46:50,208] WARNING in views: Accessing objects with User Id2023-06-24 00:46:50.208545 hours!
+Accessing objects with User Id2023-06-24 00:46:50.208545 hours!
+[2023-06-24 00:46:59,334] WARNING in views: Accessing objects with User Id2023-06-24 00:46:59.334231 hours!
+Accessing objects with User Id2023-06-24 00:46:59.334231 hours!

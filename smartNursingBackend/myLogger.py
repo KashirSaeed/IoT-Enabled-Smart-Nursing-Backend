@@ -10,6 +10,9 @@ from smartNursingBackend.settings import logger
 
 def firstThread():
     def job():
+
+        
+
         global newLogFileNamesArray
         newLogFileNamesArray = readDataFromFile('logFileNames.txt')
         if(len(newLogFileNamesArray) != 0):
@@ -92,4 +95,11 @@ def deleteDataFromFile(fileName):
 
 # Create a thread object with your function
 myThread1 = threading.Thread(target=firstThread,daemon=True)
+
+
+
+
+
+
+
 
